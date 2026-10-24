@@ -19,12 +19,17 @@ export interface Task {
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
+/** Narrow an unknown value to a plain object whose properties can be inspected safely. */
+export function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 export function isPriority(value: unknown): value is Priority {
-  return typeof value === "string" && (PRIORITIES as readonly string[]).includes(value);
+  return PRIORITIES.some((priority) => priority === value);
 }
 
 export function isStatus(value: unknown): value is Status {
-  return typeof value === "string" && (STATUSES as readonly string[]).includes(value);
+  return STATUSES.some((status) => status === value);
 }
 
 /** True for a real calendar date written as YYYY-MM-DD. */
@@ -121,8 +126,8 @@ export function completeTask(task: Task, now: Date = new Date()): Task {
 
 /** Type guard for untrusted data (stored document or imported file). */
 export function isTask(value: unknown): value is Task {
-  if (typeof value !== "object" || value === null) return false;
-  const v = value as Record<string, unknown>;
+  if (!isRecord(value)) return false;
+  const v = value;
   return (
     typeof v.id === "string" &&
     v.id.length > 0 &&

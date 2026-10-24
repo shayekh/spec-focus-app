@@ -1,5 +1,30 @@
 import { describe, expect, it } from "vitest";
-import { completeTask, createTask, normalizeTags, updateTask } from "../../src/domain/task";
+import {
+  completeTask,
+  createTask,
+  isPriority,
+  isRecord,
+  isStatus,
+  normalizeTags,
+  updateTask,
+} from "../../src/domain/task";
+
+describe("type guards", () => {
+  it("isRecord accepts plain objects only", () => {
+    expect(isRecord({})).toBe(true);
+    expect(isRecord({ a: 1 })).toBe(true);
+    for (const value of [null, undefined, [], [1], "text", 5, true]) {
+      expect(isRecord(value)).toBe(false);
+    }
+  });
+
+  it("isPriority and isStatus accept only the allowed values", () => {
+    for (const value of ["low", "medium", "high"]) expect(isPriority(value)).toBe(true);
+    for (const value of ["urgent", "", null, 3]) expect(isPriority(value)).toBe(false);
+    for (const value of ["todo", "in-progress", "completed"]) expect(isStatus(value)).toBe(true);
+    for (const value of ["done", "", undefined, {}]) expect(isStatus(value)).toBe(false);
+  });
+});
 
 const NOW = new Date("2026-10-25T10:00:00.000Z");
 

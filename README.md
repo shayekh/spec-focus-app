@@ -24,7 +24,7 @@ copy.
 
 ## Setup
 
-Requirements: [Node.js](https://nodejs.org/) 20 or newer and npm.
+Requirements: [Node.js](https://nodejs.org/) 22.12 or newer and npm.
 
 ```bash
 npm install

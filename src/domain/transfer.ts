@@ -1,4 +1,4 @@
-import { isTask, type Task } from "./task";
+import { isRecord, isTask, type Task } from "./task";
 import { todayString } from "./overdue";
 
 export const EXPORT_APP = "focus-app";
@@ -28,10 +28,8 @@ export function parseImport(text: string): ImportResult {
   } catch {
     return { ok: false, error: INVALID };
   }
-  if (typeof doc !== "object" || doc === null || Array.isArray(doc)) {
-    return { ok: false, error: INVALID };
-  }
-  const { app, version, tasks } = doc as Record<string, unknown>;
+  if (!isRecord(doc)) return { ok: false, error: INVALID };
+  const { app, version, tasks } = doc;
   if (app !== EXPORT_APP) return { ok: false, error: INVALID };
   if (version !== EXPORT_VERSION) {
     return { ok: false, error: "This export file is from an unsupported version. Nothing was changed." };

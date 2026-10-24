@@ -215,3 +215,15 @@ Then together: T018 (overdue.ts), T020 (TaskForm.tsx), T021 (TaskItem/TaskList.t
 ### Incremental delivery
 
 Add US2, then US3, then US4, validating each at its checkpoint. Add Phase 7 (backup and multi-tab) before calling the feature complete, then finish with Phase 8.
+
+---
+
+## Phase 9: Convergence
+
+**Purpose**: Remaining gaps between the implementation and the spec, plan, and constitution, found by `/speckit-converge`.
+
+- [X] T056 CRITICAL: Remove or justify the unexplained type assertions in `src/domain/task.ts` (line 125), `src/domain/transfer.ts` (line 34), and `src/storage/taskStore.ts` (lines 31-35), for example with a shared `isRecord(value): value is Record<string, unknown>` narrowing helper, and add an inline explanation to any assertion that remains; `npm run typecheck` and all tests MUST still pass per Constitution IV (contradicts)
+- [X] T057 Add a CI workflow in `.github/workflows/ci.yml` that runs `npm ci`, `npm run typecheck`, `npm test`, `npm run build`, and `npm run test:e2e` (after `npx playwright install --with-deps chromium`) on pushes and pull requests to `main`, so type checking and tests gate merges per plan: Constitution Check IV and Constitution Development Workflow (missing)
+- [X] T058 [P] Add a `--placeholder` color token for both themes in `src/styles/tokens.css`, apply it to `::placeholder` in `src/styles/app.css`, and add `placeholder` on `bg`/`surface` pairs (4.5:1) to `TEXT_PAIRS` in `tests/unit/contrast.test.ts` per SC-005 (partial)
+- [X] T059 [P] Resolve the save-failure notice that no requirement covers (`saveTasks` result handling in `src/storage/taskStore.ts` and `src/state/useTasks.ts`): add a matching functional requirement to `specs/001-task-management/spec.md` via `/speckit-specify` or `/speckit-clarify`, or document in `plan.md` why it is kept per (unrequested)
+- [X] T060 [P] Add a component test in `tests/component/TaskList.test.tsx` or a Playwright test in `tests/e2e/performance.spec.ts` that renders 500 tasks and asserts a filter or search change updates the visible list in under 1 second per SC-003 (partial)

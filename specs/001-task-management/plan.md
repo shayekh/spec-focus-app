@@ -105,3 +105,13 @@ rules and must not import from `ui/`, `state/`, or `storage/`, so it can be test
 ## Complexity Tracking
 
 No constitution violations; nothing to justify.
+
+## Deliberate Additions Beyond the Spec
+
+- **Save-failure notice**: `saveTasks` reports a failed write (storage full, or storage blocked
+  in a private window) and `useTasks` shows a dismissible notice telling the user to export their
+  tasks. The spec covers unreadable stored data (FR-017) but not failed writes. It is kept
+  because browser storage is the only copy of the user's data (spec Assumptions), so a silent
+  failed save would lose tasks without warning. It adds no dependency and is covered by tests in
+  `tests/unit/taskStore.test.ts` and `tests/unit/useTasks.test.ts`. If the spec is revised, add a
+  requirement for it next to FR-017.

@@ -1,4 +1,4 @@
-import { isTask, type Task } from "../domain/task";
+import { isRecord, isTask, type Task } from "../domain/task";
 
 export const TASKS_KEY = "focus-app:tasks";
 export const STORAGE_VERSION = 1;
@@ -25,14 +25,9 @@ export function loadTasks(): LoadResult {
 
   try {
     const doc: unknown = JSON.parse(raw);
-    if (
-      typeof doc === "object" &&
-      doc !== null &&
-      (doc as { version?: unknown }).version === STORAGE_VERSION &&
-      Array.isArray((doc as { tasks?: unknown }).tasks) &&
-      (doc as { tasks: unknown[] }).tasks.every(isTask)
-    ) {
-      return { tasks: (doc as { tasks: Task[] }).tasks, notice: null };
+    if (isRecord(doc) && doc.version === STORAGE_VERSION) {
+      const tasks: unknown = doc.tasks;
+      if (Array.isArray(tasks) && tasks.every(isTask)) return { tasks, notice: null };
     }
   } catch {
     // fall through to the notice below

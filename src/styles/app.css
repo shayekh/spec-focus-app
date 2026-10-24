@@ -75,6 +75,11 @@ body {
   padding: 6px 8px;
 }
 
+.field input::placeholder {
+  color: var(--placeholder);
+  opacity: 1;
+}
+
 .field-error {
   color: var(--danger);
   font-size: 0.85rem;

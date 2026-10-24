@@ -37,6 +37,8 @@ const TEXT_PAIRS: [string, string, number][] = [
   ["text-muted", "bg", 4.5],
   ["text-muted", "surface", 4.5],
   ["text-muted", "surface-alt", 4.5],
+  ["placeholder", "surface", 4.5],
+  ["placeholder", "surface-alt", 4.5],
   ["accent-text", "accent", 4.5],
   ["danger-text", "danger", 4.5],
   ["warning-text", "warning-bg", 4.5],
