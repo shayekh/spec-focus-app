@@ -3,6 +3,8 @@
 A personal task manager that runs entirely in your browser. There is no backend and no account:
 your tasks are stored on your own device.
 
+![The task list, with priorities, due dates, overdue and repeat badges, tags, and subtask progress](docs/screenshots/list.png)
+
 ## What it does
 
 - **Tasks**: create, edit, mark complete, and delete tasks (delete asks for confirmation).
@@ -32,6 +34,27 @@ your tasks are stored on your own device.
 - **Several tabs**: a change in one tab shows up in the others without reloading.
 - **Keyboard and accessibility**: every action works from the keyboard, dialogs trap focus and
   return it when closed, and text contrast meets WCAG AA in both themes.
+
+## Screenshots
+
+**Calendar.** Tasks sit on their due dates, today is marked, and upcoming occurrences of repeating
+tasks show as dashed previews with a repeat symbol.
+
+![Month calendar with a completed task, an overdue task, repeating tasks, and dashed upcoming previews](docs/screenshots/calendar.png)
+
+**Subtasks.** Each task opens a dialog of steps with their own priority and due date, shown with the
+task's tags. Steps can be ticked off, edited, reordered, and deleted.
+
+![The subtasks dialog with two completed steps, one overdue step, and Up, Down, Edit, and Delete buttons](docs/screenshots/subtasks.png)
+
+**Task form.** Adding and editing share one dialog. For a repeating task it asks whether a change
+applies to this occurrence or the entire series, and offers Stop repeating.
+
+![The task form for a weekly repeating task, with the Apply changes to choice](docs/screenshots/task-form.png)
+
+**Dark theme.** Light and dark both meet WCAG AA contrast.
+
+![The task list in the dark theme](docs/screenshots/dark.png)
 
 Because data lives in the browser, clearing site data removes your tasks. Use **Export** to keep a
 copy.
