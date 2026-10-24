@@ -17,6 +17,12 @@
   --focus: #1a56db;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   --backdrop: rgba(0, 0, 0, 0.5);
+  --surface-hover: #e0e4ec;
+  --accent-hover: #1b43b0;
+  --danger-hover: #8f1d17;
+  --priority-high: #b3261e;
+  --priority-medium: #8a5a00;
+  --priority-low: #2f6f4f;
 }
 
 :root[data-theme="dark"] {
@@ -38,4 +44,10 @@
   --focus: #9db9ff;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   --backdrop: rgba(0, 0, 0, 0.7);
+  --surface-hover: #343a4a;
+  --accent-hover: #a3bdff;
+  --danger-hover: #ffa8a0;
+  --priority-high: #ff8a80;
+  --priority-medium: #ffc65c;
+  --priority-low: #7fd6a0;
 }

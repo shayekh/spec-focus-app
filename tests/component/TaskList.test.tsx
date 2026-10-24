@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
 import { render, screen, within } from "@testing-library/react";
 import { TaskList } from "../../src/ui/TaskList";
 import type { Task } from "../../src/domain/task";
@@ -19,7 +20,13 @@ function task(overrides: Partial<Task>): Task {
 }
 
 const noop = () => {};
-const handlers = { onEdit: noop, onComplete: noop, onDelete: noop, onClearFilters: noop };
+const handlers = {
+  onEdit: noop,
+  onComplete: noop,
+  onDelete: noop,
+  onClearFilters: noop,
+  onCreate: noop,
+};
 
 describe("TaskList", () => {
   it("renders title, priority, status, due date, and tags for each task", () => {
@@ -63,5 +70,19 @@ describe("TaskList", () => {
     );
     expect(screen.queryByText(/overdue/i)).not.toBeInTheDocument();
     expect(screen.getByRole("listitem")).toHaveClass("is-completed");
+  });
+
+  it("offers a button in the empty state that starts a new task", async () => {
+    const onCreate = vi.fn();
+    render(
+      <TaskList tasks={[]} hasTasks={false} today="2026-10-25" {...handlers} onCreate={onCreate} />,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Add your first task" }));
+    expect(onCreate).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not show the create button when tasks exist but none match", () => {
+    render(<TaskList tasks={[]} hasTasks today="2026-10-25" {...handlers} />);
+    expect(screen.queryByRole("button", { name: "Add your first task" })).not.toBeInTheDocument();
   });
 });

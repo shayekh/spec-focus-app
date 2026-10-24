@@ -10,6 +10,8 @@ interface TaskListProps {
   onComplete: (task: Task) => void;
   onDelete: (task: Task) => void;
   onClearFilters: () => void;
+  /** Opens the new task form from the empty state. */
+  onCreate: () => void;
 }
 
 export function TaskList({
@@ -20,11 +22,15 @@ export function TaskList({
   onComplete,
   onDelete,
   onClearFilters,
+  onCreate,
 }: TaskListProps) {
   if (!hasTasks) {
     return (
       <div className="empty-state">
-        <p>No tasks yet. Use &ldquo;New task&rdquo; to add your first one.</p>
+        <p>No tasks yet. Add your first one to get started.</p>
+        <button type="button" className="primary" onClick={onCreate}>
+          Add your first task
+        </button>
       </div>
     );
   }

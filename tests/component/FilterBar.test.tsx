@@ -82,6 +82,7 @@ describe("no-match state", () => {
         onComplete={noop}
         onDelete={noop}
         onClearFilters={onClearFilters}
+        onCreate={noop}
       />,
     );
     expect(screen.getByText(/no tasks match/i)).toBeInTheDocument();

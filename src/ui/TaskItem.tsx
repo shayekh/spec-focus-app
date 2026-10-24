@@ -19,7 +19,7 @@ export function TaskItem({ task, today, onEdit, onComplete, onDelete }: TaskItem
         <h3 className="task-title">{task.title}</h3>
         {task.description && <p className="task-description">{task.description}</p>}
         <div className="task-meta">
-          <span className="badge">Priority: {task.priority}</span>
+          <span className={`badge priority priority-${task.priority}`}>Priority: {task.priority}</span>
           <span className="badge">Status: {task.status}</span>
           {task.dueDate && <span className="badge">Due {task.dueDate}</span>}
           {overdue && <span className="badge overdue">Overdue</span>}
@@ -45,7 +45,7 @@ export function TaskItem({ task, today, onEdit, onComplete, onDelete }: TaskItem
         </button>
         <button
           type="button"
-          className="danger"
+          className="danger-outline"
           aria-label={`Delete ${task.title}`}
           onClick={() => onDelete(task)}
         >

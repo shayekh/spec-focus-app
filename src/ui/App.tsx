@@ -119,6 +119,7 @@ export function App() {
           onComplete={handleComplete}
           onDelete={(task) => setDialog({ kind: "delete", task })}
           onClearFilters={clearFilters}
+          onCreate={() => setDialog({ kind: "create" })}
         />
       </main>
       {(dialog.kind === "create" || dialog.kind === "edit") && (

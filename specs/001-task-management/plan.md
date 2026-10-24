@@ -115,3 +115,10 @@ No constitution violations; nothing to justify.
   failed save would lose tasks without warning. It adds no dependency and is covered by tests in
   `tests/unit/taskStore.test.ts` and `tests/unit/useTasks.test.ts`. If the spec is revised, add a
   requirement for it next to FR-017.
+
+- **UI polish pass** (from a UI/UX review): 150ms hover and pressed feedback on buttons, switched
+  off under `prefers-reduced-motion`; a visibly disabled "Clear filters" button; a colored dot per
+  priority (the text label stays, so color is never the only cue); an "Add your first task" button
+  in the empty state; and an outlined Delete button in the list (the confirm dialog keeps the
+  solid one). All colors are theme tokens covered by the contrast test, and the behavior is covered
+  by `tests/e2e/interaction.spec.ts` and the component tests. No requirement changes.

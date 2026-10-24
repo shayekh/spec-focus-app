@@ -46,4 +46,30 @@ describe("TaskItem actions", () => {
     expect(handlers.onEdit).toHaveBeenCalledWith(item);
     expect(handlers.onDelete).toHaveBeenCalledWith(item);
   });
+
+  it("marks the priority badge with a per-priority class and keeps the text", () => {
+    for (const priority of ["low", "medium", "high"] as const) {
+      const { unmount } = render(
+        <ul>
+          <TaskItem
+            task={{ ...task, priority }}
+            today="2026-10-25"
+            onEdit={() => {}}
+            onComplete={() => {}}
+            onDelete={() => {}}
+          />
+        </ul>,
+      );
+      const badge = screen.getByText(`Priority: ${priority}`);
+      expect(badge).toHaveClass("priority", `priority-${priority}`);
+      unmount();
+    }
+  });
+
+  it("uses an outlined Delete button in the list", () => {
+    setup();
+    const button = screen.getByRole("button", { name: /delete write report/i });
+    expect(button).toHaveClass("danger-outline");
+    expect(button).not.toHaveClass("danger");
+  });
 });
