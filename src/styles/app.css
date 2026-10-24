@@ -310,6 +310,7 @@ button.danger-outline:hover:not(:disabled) {
 }
 
 .dialog {
+  position: relative;
   width: 100%;
   max-width: 480px;
   max-height: 100%;
@@ -323,6 +324,19 @@ button.danger-outline:hover:not(:disabled) {
 
 .dialog h2 {
   margin-top: 0;
+  /* Leave room for the Close button in the corner. */
+  padding-right: 40px;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: var(--text-xl);
+  line-height: 1;
 }
 
 .dialog form {
@@ -335,6 +349,16 @@ button.danger-outline:hover:not(:disabled) {
   justify-content: flex-end;
   gap: 8px;
   margin-top: 8px;
+}
+
+/* In a tall form the buttons stay on screen while the fields scroll. */
+.dialog form .dialog-actions {
+  position: sticky;
+  bottom: -20px;
+  margin: 8px -20px -20px;
+  padding: 12px 20px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
 }
 
 .visually-hidden {
@@ -362,4 +386,157 @@ button.danger-outline:hover:not(:disabled) {
   button:active:not(:disabled) {
     transform: none;
   }
+}
+
+/* ---- Repeating tasks ---- */
+.repeat-fields,
+.repeat-days,
+.scope-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.scope-choice {
+  padding: 8px 10px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.scope-choice legend {
+  padding: 0 4px;
+}
+
+.scope-option,
+.day-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+}
+
+.day-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.repeat-sentence,
+.repeat-note,
+.field-note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.link-button {
+  align-self: flex-start;
+  padding: 4px 0;
+  color: var(--danger);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+}
+
+.badge.repeat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ---- Subtasks ---- */
+.task-progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.progress-bar {
+  flex: 1 1 120px;
+  min-width: 80px;
+  max-width: 240px;
+  height: 8px;
+  overflow: hidden;
+  background: var(--surface-alt);
+  border: 1px solid var(--border-control);
+  border-radius: 4px;
+}
+
+.progress-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.subtasks-summary {
+  margin: 0 0 8px;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.subtask-add {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.subtask-add .field {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.subtask-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subtask-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.subtask-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  color: var(--text);
+}
+
+.subtask-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.subtask-row.is-done .subtask-title {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.subtask-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }

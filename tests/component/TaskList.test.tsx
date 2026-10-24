@@ -24,6 +24,7 @@ const handlers = {
   onEdit: noop,
   onComplete: noop,
   onDelete: noop,
+  onSubtasks: noop,
   onClearFilters: noop,
   onCreate: noop,
 };

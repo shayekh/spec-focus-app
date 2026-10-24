@@ -47,6 +47,11 @@ const TEXT_PAIRS: [string, string, number][] = [
   ["priority-high", "surface-alt", 3],
   ["priority-medium", "surface-alt", 3],
   ["priority-low", "surface-alt", 3],
+  ["today-text", "today-bg", 4.5],
+  ["today-bg", "surface", 3],
+  ["text", "drop-bg", 4.5],
+  ["text", "cell-outside-bg", 4.5],
+  ["text-muted", "cell-outside-bg", 4.5],
   ["accent-text", "accent", 4.5],
   ["danger-text", "danger", 4.5],
   ["warning-text", "warning-bg", 4.5],
@@ -55,6 +60,11 @@ const TEXT_PAIRS: [string, string, number][] = [
   ["danger", "surface", 4.5],
   ["border-control", "surface", 3],
   ["border-control", "bg", 3],
+  // The subtasks progress bar: its fill against its track.
+  ["accent", "surface-alt", 3],
+  // The dashed outline of an upcoming occurrence, wherever a calendar cell can place it.
+  ["border-control", "surface-alt", 3],
+  ["border-control", "cell-outside-bg", 3],
   ["focus", "surface", 3],
   ["focus", "bg", 3],
 ];

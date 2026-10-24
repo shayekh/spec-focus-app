@@ -24,6 +24,10 @@
   --priority-high: #b3261e;
   --priority-medium: #8a5a00;
   --priority-low: #2f6f4f;
+  --today-bg: #2456d6;
+  --today-text: #ffffff;
+  --drop-bg: #dbe5ff;
+  --cell-outside-bg: #eef0f4;
 }
 
 :root[data-theme="dark"] {
@@ -52,4 +56,8 @@
   --priority-high: #ff8a80;
   --priority-medium: #ffc65c;
   --priority-low: #7fd6a0;
+  --today-bg: #7aa2ff;
+  --today-text: #0c1224;
+  --drop-bg: #2b3a66;
+  --cell-outside-bg: #181b22;
 }

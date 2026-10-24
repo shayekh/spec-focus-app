@@ -1,0 +1,257 @@
+/* Calendar view. Colors come from the theme tokens; sizes from the type scale. */
+
+.view-row {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.view-switch {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.calendar {
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.calendar-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.calendar-nav,
+.calendar-modes {
+  display: flex;
+  gap: 6px;
+}
+
+.calendar-heading {
+  flex: 1;
+  margin: 0;
+  font-size: var(--text-md);
+  text-align: center;
+}
+
+.calendar-empty {
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  color: var(--text-muted);
+  background: var(--surface-alt);
+  border-radius: 6px;
+}
+
+/* On a narrow window the grid keeps a readable width and scrolls inside its own container. */
+.calendar-scroll {
+  /* Also the positioning context for the visually hidden text inside the grid, so that text is
+     clipped here instead of stretching the whole page sideways. */
+  position: relative;
+  overflow-x: auto;
+}
+
+.calendar-grid {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.calendar-grid th {
+  padding: 6px;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-align: left;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.cal-day {
+  height: 112px;
+  padding: 4px;
+  vertical-align: top;
+  border: 1px solid var(--border);
+}
+
+.cal-day.is-outside {
+  color: var(--text-muted);
+  background: var(--cell-outside-bg);
+}
+
+.cal-day.is-drop-target {
+  background: var(--drop-bg);
+  outline: 2px dashed var(--focus);
+  outline-offset: -2px;
+}
+
+.cal-day-head {
+  margin-bottom: 2px;
+}
+
+.cal-day-number {
+  display: inline-block;
+  min-width: 1.75rem;
+  padding: 0 4px;
+  font-size: var(--text-sm);
+  text-align: center;
+  border-radius: 999px;
+}
+
+/* Today is marked by a filled circle and bold number, and announced as "today". */
+time.is-today .cal-day-number {
+  font-weight: var(--weight-bold);
+  color: var(--today-text);
+  background: var(--today-bg);
+}
+
+.cal-entry {
+  position: relative;
+}
+
+.cal-entries {
+  display: grid;
+  /* minmax(0, ...) lets a very long title shrink and be cut off instead of widening the cell. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cal-entry-open {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 2px 6px;
+  font-size: var(--text-sm);
+  text-align: left;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+}
+
+.cal-entry-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.priority-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--priority-medium);
+}
+
+.priority-dot.priority-high {
+  background: var(--priority-high);
+}
+
+.priority-dot.priority-medium {
+  background: var(--priority-medium);
+}
+
+.priority-dot.priority-low {
+  background: var(--priority-low);
+}
+
+.cal-entry.is-completed .cal-entry-title {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+/* Overdue is shown with a heavier border and bold title as well as the colour. */
+.cal-entry.is-overdue .cal-entry-open {
+  color: var(--overdue);
+  border-width: 2px;
+  border-color: var(--overdue);
+}
+
+.cal-entry.is-overdue .cal-entry-title {
+  font-weight: var(--weight-semibold);
+}
+
+.cal-more {
+  margin-top: 2px;
+  padding: 0 6px;
+  font-size: var(--text-sm);
+}
+
+.calendar-week .cal-day {
+  height: auto;
+  min-height: 240px;
+}
+
+/* Week and day views have room, so long titles wrap instead of being cut off. */
+.calendar-week .cal-entry-title,
+.calendar-dayview .cal-entry-title {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.cal-day-block {
+  padding: 8px;
+  border: 1px solid var(--border);
+}
+
+.calendar-dayview .cal-entries {
+  gap: 6px;
+}
+
+.calendar-dayview .cal-entry-open {
+  padding: 8px 10px;
+  font-size: var(--text-base);
+}
+
+/* The Move button is out of sight until its task has focus or the pointer, but always reachable. */
+.cal-move {
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  height: 22px;
+  margin-top: -11px;
+  padding: 0 6px;
+  font-size: var(--text-sm);
+  line-height: 1;
+  background: var(--surface);
+  opacity: 0;
+}
+
+.cal-entry:hover .cal-move,
+.cal-entry:focus-within .cal-move,
+.cal-entry.is-moving .cal-move {
+  opacity: 1;
+}
+
+.cal-entry.is-moving .cal-entry-open {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+
+/* ---- Upcoming occurrences of repeating tasks ---- */
+.cal-preview {
+  background: transparent;
+  border: 1px dashed var(--border-control);
+  color: var(--text-muted);
+}
+
+.cal-preview .cal-entry-open {
+  color: var(--text-muted);
+}
+
+.cal-entry .repeat-icon {
+  flex: none;
+  margin-inline-start: auto;
+  color: var(--text-muted);
+}
+
+.cal-preview .cal-entry-title {
+  font-style: italic;
+}

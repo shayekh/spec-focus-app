@@ -81,6 +81,7 @@ describe("no-match state", () => {
         onEdit={noop}
         onComplete={noop}
         onDelete={noop}
+        onSubtasks={noop}
         onClearFilters={onClearFilters}
         onCreate={noop}
       />,

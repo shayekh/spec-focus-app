@@ -1,4 +1,4 @@
-import { isRecord, isTask, type Task } from "./task";
+import { repairStoredTask, isRecord, isTask, type Task } from "./task";
 import { todayString } from "./overdue";
 
 export const EXPORT_APP = "focus-app";
@@ -29,11 +29,13 @@ export function parseImport(text: string): ImportResult {
     return { ok: false, error: INVALID };
   }
   if (!isRecord(doc)) return { ok: false, error: INVALID };
-  const { app, version, tasks } = doc;
+  const { app, version, tasks: imported } = doc;
   if (app !== EXPORT_APP) return { ok: false, error: INVALID };
   if (version !== EXPORT_VERSION) {
     return { ok: false, error: "This export file is from an unsupported version. Nothing was changed." };
   }
+  // A task whose repeat rule cannot be read becomes an ordinary task instead of rejecting the file.
+  const tasks = Array.isArray(imported) ? imported.map(repairStoredTask) : imported;
   if (!Array.isArray(tasks) || !tasks.every(isTask)) return { ok: false, error: INVALID };
 
   const ids = new Set(tasks.map((t) => t.id));

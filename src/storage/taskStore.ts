@@ -1,4 +1,4 @@
-import { isRecord, isTask, type Task } from "../domain/task";
+import { repairStoredTask, isRecord, isTask, type Task } from "../domain/task";
 
 export const TASKS_KEY = "focus-app:tasks";
 export const STORAGE_VERSION = 1;
@@ -26,7 +26,9 @@ export function loadTasks(): LoadResult {
   try {
     const doc: unknown = JSON.parse(raw);
     if (isRecord(doc) && doc.version === STORAGE_VERSION) {
-      const tasks: unknown = doc.tasks;
+      const stored: unknown = doc.tasks;
+      // A task whose repeat rule cannot be read becomes an ordinary task instead of failing the load.
+      const tasks = Array.isArray(stored) ? stored.map(repairStoredTask) : stored;
       if (Array.isArray(tasks) && tasks.every(isTask)) return { tasks, notice: null };
     }
   } catch {

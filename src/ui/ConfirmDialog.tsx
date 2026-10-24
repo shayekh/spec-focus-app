@@ -1,10 +1,14 @@
-import { useEffect, useId, useRef, type KeyboardEvent } from "react";
-import { useRestoreFocus } from "./useRestoreFocus";
+import { useRef } from "react";
+import { Modal } from "./Modal";
 
 interface ConfirmDialogProps {
   title: string;
   message: string;
   confirmLabel: string;
+  /** Text of the button that backs out. Defaults to "Cancel". */
+  cancelLabel?: string;
+  /** "danger" (default) for destructive actions, "primary" for ordinary ones. */
+  confirmVariant?: "danger" | "primary";
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -13,55 +17,25 @@ export function ConfirmDialog({
   title,
   message,
   confirmLabel,
+  cancelLabel = "Cancel",
+  confirmVariant = "danger",
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
   const cancelRef = useRef<HTMLButtonElement>(null);
-  const confirmRef = useRef<HTMLButtonElement>(null);
-  const headingId = useId();
-  useRestoreFocus();
 
-  useEffect(() => {
-    cancelRef.current?.focus();
-  }, []);
-
-  function handleKeyDown(event: KeyboardEvent) {
-    if (event.key === "Escape") {
-      event.stopPropagation();
-      onCancel();
-      return;
-    }
-    if (event.key !== "Tab") return;
-    const active = document.activeElement;
-    if (event.shiftKey && active === cancelRef.current) {
-      event.preventDefault();
-      confirmRef.current?.focus();
-    } else if (!event.shiftKey && active === confirmRef.current) {
-      event.preventDefault();
-      cancelRef.current?.focus();
-    }
-  }
-
+  // Focus starts on the safe choice, so a stray Enter never confirms.
   return (
-    <div className="dialog-backdrop">
-      <div
-        className="dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={headingId}
-        onKeyDown={handleKeyDown}
-      >
-        <h2 id={headingId}>{title}</h2>
-        <p>{message}</p>
-        <div className="dialog-actions">
-          <button ref={cancelRef} type="button" onClick={onCancel}>
-            Cancel
-          </button>
-          <button ref={confirmRef} type="button" className="danger" onClick={onConfirm}>
-            {confirmLabel}
-          </button>
-        </div>
+    <Modal title={title} onRequestClose={onCancel} initialFocusRef={cancelRef}>
+      <p>{message}</p>
+      <div className="dialog-actions">
+        <button ref={cancelRef} type="button" onClick={onCancel}>
+          {cancelLabel}
+        </button>
+        <button type="button" className={confirmVariant} onClick={onConfirm}>
+          {confirmLabel}
+        </button>
       </div>
-    </div>
+    </Modal>
   );
 }

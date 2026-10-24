@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { act, renderHook } from "@testing-library/react";
 import { tasksReducer, useTasks } from "../../src/state/useTasks";
 import { loadTasks } from "../../src/storage/taskStore";
@@ -69,5 +69,40 @@ describe("useTasks", () => {
     }
     expect(result.current.notice).toMatch(/could not be saved/i);
     expect(result.current.tasks).toEqual([a]);
+  });
+});
+
+describe("tasksReducer change action", () => {
+  const c = make("C", "c");
+
+  it("replaces tasks by id, adds unknown ids at the front, and removes ids, all at once", () => {
+    const renamed = { ...a, title: "A2" };
+    const result = tasksReducer([a, b], { type: "change", upsert: [renamed, c], remove: ["b"] });
+    expect(result).toEqual([c, renamed]);
+  });
+
+  it("keeps the order of existing tasks that are replaced", () => {
+    const renamed = { ...b, title: "B2" };
+    expect(tasksReducer([a, b], { type: "change", upsert: [renamed], remove: [] })).toEqual([a, renamed]);
+  });
+
+  it("does nothing for an empty change", () => {
+    const list = [a, b];
+    expect(tasksReducer(list, { type: "change", upsert: [], remove: [] })).toEqual(list);
+  });
+
+  it("ignores ids to remove that are not present", () => {
+    expect(tasksReducer([a], { type: "change", upsert: [], remove: ["zzz"] })).toEqual([a]);
+  });
+
+  it("applies a change in one update and one save through the hook", () => {
+    const { result } = renderHook(() => useTasks());
+    act(() => result.current.dispatch({ type: "add", task: a }));
+    const setItem = vi.spyOn(Storage.prototype, "setItem");
+    act(() => result.current.dispatch({ type: "change", upsert: [{ ...a, title: "A2" }, b, c], remove: [] }));
+    expect(setItem).toHaveBeenCalledTimes(1);
+    setItem.mockRestore();
+    expect(result.current.tasks.map((t) => t.id)).toEqual(["c", "b", "a"]);
+    expect(loadTasks().tasks.map((t) => t.title)).toEqual(["C", "B", "A2"]);
   });
 });

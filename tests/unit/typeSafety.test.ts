@@ -12,6 +12,8 @@ function sourceFiles(dir: string): string[] {
 }
 
 function codeOf(line: string): string {
+  // Lines inside multi-line comments start with `*` or `/*`; they are prose, not code.
+  if (/^\s*(\*|\/\*)/.test(line)) return "";
   return line.replace(/\/\/.*$/, "").replace(/\/\*.*?\*\//g, "").replace(/"[^"]*"|'[^']*'|`[^`]*`/g, '""');
 }
 

@@ -1,5 +1,8 @@
 import { isOverdue } from "../domain/overdue";
+import { describeRecurrence } from "../domain/recurrence";
+import { describeProgress, progress } from "../domain/subtasks";
 import type { Task } from "../domain/task";
+import { RepeatIcon } from "./RepeatIcon";
 
 interface TaskItemProps {
   task: Task;
@@ -7,11 +10,13 @@ interface TaskItemProps {
   onEdit: (task: Task) => void;
   onComplete: (task: Task) => void;
   onDelete: (task: Task) => void;
+  onSubtasks: (task: Task) => void;
 }
 
-export function TaskItem({ task, today, onEdit, onComplete, onDelete }: TaskItemProps) {
+export function TaskItem({ task, today, onEdit, onComplete, onDelete, onSubtasks }: TaskItemProps) {
   const completed = task.status === "completed";
   const overdue = isOverdue(task, today);
+  const steps = progress(task);
 
   return (
     <li className={`task-item${completed ? " is-completed" : ""}`}>
@@ -23,12 +28,26 @@ export function TaskItem({ task, today, onEdit, onComplete, onDelete }: TaskItem
           <span className="badge">Status: {task.status}</span>
           {task.dueDate && <span className="badge due">Due {task.dueDate}</span>}
           {overdue && <span className="badge overdue">Overdue</span>}
+          {task.recurrence && (
+            <span className="badge repeat">
+              <RepeatIcon />
+              {describeRecurrence(task.recurrence)}
+            </span>
+          )}
           {task.tags.map((tag) => (
             <span key={tag} className="badge">
               {tag}
             </span>
           ))}
         </div>
+        {steps.total > 0 && (
+          <div className="task-progress">
+            <span>{describeProgress(steps)}</span>
+            <span className="progress-bar" aria-hidden="true">
+              <span style={{ width: `${Math.round((steps.done / steps.total) * 100)}%` }} />
+            </span>
+          </div>
+        )}
       </div>
       <div className="task-actions">
         {!completed && (
@@ -40,6 +59,9 @@ export function TaskItem({ task, today, onEdit, onComplete, onDelete }: TaskItem
             Complete
           </button>
         )}
+        <button type="button" aria-label={`Subtasks for ${task.title}`} onClick={() => onSubtasks(task)}>
+          Subtasks
+        </button>
         <button type="button" aria-label={`Edit ${task.title}`} onClick={() => onEdit(task)}>
           Edit
         </button>

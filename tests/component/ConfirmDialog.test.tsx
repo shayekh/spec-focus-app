@@ -57,4 +57,60 @@ describe("ConfirmDialog", () => {
     await userEvent.tab();
     expect(cancel).toHaveFocus();
   });
+
+  it("lets the cancel button be renamed and defaults to Cancel", () => {
+    const { unmount } = render(
+      <ConfirmDialog title="t" message="m" confirmLabel="Yes" onConfirm={() => {}} onCancel={() => {}} />,
+    );
+    expect(screen.getByRole("button", { name: "Cancel" })).toBeInTheDocument();
+    unmount();
+
+    render(
+      <ConfirmDialog
+        title="Discard changes?"
+        message="m"
+        confirmLabel="Discard"
+        cancelLabel="Keep editing"
+        onConfirm={() => {}}
+        onCancel={() => {}}
+      />,
+    );
+    expect(screen.getByRole("button", { name: "Keep editing" })).toHaveFocus();
+    expect(screen.queryByRole("button", { name: "Cancel" })).not.toBeInTheDocument();
+  });
+
+  it("renders in a portal and makes the page underneath inert while open", () => {
+    const page = document.createElement("div");
+    page.id = "root";
+    document.body.appendChild(page);
+    const { unmount } = render(
+      <ConfirmDialog title="t" message="m" confirmLabel="Yes" onConfirm={() => {}} onCancel={() => {}} />,
+    );
+    expect(screen.getByRole("dialog").closest("#root")).toBeNull();
+    expect(page).toHaveAttribute("inert");
+    unmount();
+    expect(page).not.toHaveAttribute("inert");
+    page.remove();
+  });
+
+  it("has no Close button", () => {
+    render(
+      <ConfirmDialog title="t" message="m" confirmLabel="Yes" onConfirm={() => {}} onCancel={() => {}} />,
+    );
+    expect(screen.queryByRole("button", { name: "Close" })).not.toBeInTheDocument();
+  });
+});
+
+
+describe("ConfirmDialog confirm style", () => {
+  const props = { title: "T", message: "M", confirmLabel: "Go", onConfirm: () => {}, onCancel: () => {} };
+
+  it("uses the danger style by default and the primary style on request", () => {
+    const { unmount } = render(<ConfirmDialog {...props} />);
+    expect(screen.getByRole("button", { name: "Go" })).toHaveClass("danger");
+    unmount();
+    render(<ConfirmDialog {...props} confirmVariant="primary" />);
+    expect(screen.getByRole("button", { name: "Go" })).toHaveClass("primary");
+    expect(screen.getByRole("button", { name: "Go" })).not.toHaveClass("danger");
+  });
 });

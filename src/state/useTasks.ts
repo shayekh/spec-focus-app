@@ -7,7 +7,9 @@ export type TaskAction =
   | { type: "add"; task: Task }
   | { type: "update"; task: Task }
   | { type: "delete"; id: string }
-  | { type: "replaceAll"; tasks: Task[] };
+  | { type: "replaceAll"; tasks: Task[] }
+  /** Replace tasks that exist, add ones that do not (at the front), and remove some, in one step. */
+  | { type: "change"; upsert: Task[]; remove: string[] };
 
 export function tasksReducer(tasks: Task[], action: TaskAction): Task[] {
   switch (action.type) {
@@ -19,6 +21,14 @@ export function tasksReducer(tasks: Task[], action: TaskAction): Task[] {
       return tasks.filter((t) => t.id !== action.id);
     case "replaceAll":
       return action.tasks;
+    case "change": {
+      const replacements = new Map(action.upsert.map((task) => [task.id, task]));
+      const removed = new Set(action.remove);
+      const kept = tasks.filter((task) => !removed.has(task.id)).map((task) => replacements.get(task.id) ?? task);
+      const known = new Set(tasks.map((task) => task.id));
+      const added = action.upsert.filter((task) => !known.has(task.id)).reverse();
+      return [...added, ...kept];
+    }
   }
 }
 

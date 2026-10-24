@@ -9,6 +9,7 @@ interface TaskListProps {
   onEdit: (task: Task) => void;
   onComplete: (task: Task) => void;
   onDelete: (task: Task) => void;
+  onSubtasks: (task: Task) => void;
   onClearFilters: () => void;
   /** Opens the new task form from the empty state. */
   onCreate: () => void;
@@ -21,6 +22,7 @@ export function TaskList({
   onEdit,
   onComplete,
   onDelete,
+  onSubtasks,
   onClearFilters,
   onCreate,
 }: TaskListProps) {
@@ -56,6 +58,7 @@ export function TaskList({
           onEdit={onEdit}
           onComplete={onComplete}
           onDelete={onDelete}
+          onSubtasks={onSubtasks}
         />
       ))}
     </ul>
