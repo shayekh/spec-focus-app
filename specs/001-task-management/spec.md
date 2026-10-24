@@ -18,6 +18,11 @@
 - Q: How should the task list be ordered? → A: Newest first by default, with user-selectable sorting by due date or priority.
 - Q: What happens when Focus App is open in more than one browser tab? → A: Changes in one tab appear in the others, and the most recent save wins.
 
+### Session 2026-10-25 (analysis follow-up)
+
+- Q: What does "works offline" require? → A: No runtime network requests and no account; offline reloading via a service worker is out of scope (FR-013).
+- Q: What happens to a tag filter when its tag no longer exists on any task? → A: The tag filter resets itself to "all".
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Create and view tasks (Priority: P1)
@@ -107,7 +112,7 @@ confirm the choice persisted.
 - Very long titles, descriptions, or many tags: displayed without breaking the layout.
 - Duplicate tags on one task (including differing only by letter case): stored once.
 - Due date in the past: allowed, and the task is visibly marked overdue unless completed.
-- Tag filter when the selected tag no longer exists on any task: the filter is cleared or shows an empty result with a clear message.
+- Tag filter when the selected tag no longer exists on any task (for example, its last task was edited or deleted): the tag filter resets itself to "all" and the list updates.
 - Stored data is missing, cleared by the user, or unreadable at startup: the app opens with an empty list and informs the user rather than crashing.
 - A filter is active while a task is edited so that it no longer matches: it leaves the visible list.
 
@@ -127,7 +132,7 @@ confirm the choice persisted.
 - **FR-010**: Users MUST be able to search tasks by text in the title and description, case-insensitively, in combination with filters.
 - **FR-011**: System MUST show a helpful empty state when there are no tasks or no matches.
 - **FR-012**: System MUST persist all tasks and the theme choice in the user's browser on their device so they survive closing and reopening the browser and the app.
-- **FR-013**: System MUST work fully without an internet connection or any account.
+- **FR-013**: System MUST NOT make any network request at runtime or require any account; every feature MUST work using only data on the user's device.
 - **FR-014**: System MUST provide light and dark themes, default to the system preference, and remember the user's choice.
 - **FR-015**: System MUST be fully operable by keyboard for all task actions, filters, search, and theme switching.
 - **FR-016**: System MUST present a desktop-first layout that remains usable at smaller window sizes.
@@ -159,7 +164,7 @@ confirm the choice persisted.
 
 - Focus App is a single-user personal tool: no accounts, sharing, or sync between devices.
 - Data lives only on the user's device; the only backup mechanism is manual file export and import (no cloud backup).
-- Focus App is a web app used in a desktop browser, working fully offline once loaded; installable desktop packaging and a dedicated phone layout are out of scope.
+- Focus App is a web app used in a desktop browser, making no network requests at runtime once loaded (offline reloading via a service worker is out of scope); installable desktop packaging and a dedicated phone layout are out of scope.
 - Tasks have no sub-tasks, recurring schedules, reminders, or notifications in this version.
 - Due dates are calendar dates without a time of day.
 - The default list order is by creation date, newest first; users can switch to sorting by due date or priority.
