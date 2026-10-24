@@ -29,7 +29,8 @@ function contrast(a: string, b: string): number {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-// [foreground, background, minimum ratio]. 4.5 is WCAG AA for normal text, 3 for UI outlines.
+// [foreground, background, minimum ratio]. 4.5 is WCAG AA for normal text, 3 for UI outlines
+// and for the borders that identify inputs and selects (WCAG 1.4.11).
 const TEXT_PAIRS: [string, string, number][] = [
   ["text", "bg", 4.5],
   ["text", "surface", 4.5],
@@ -52,6 +53,8 @@ const TEXT_PAIRS: [string, string, number][] = [
   ["overdue", "surface", 4.5],
   ["overdue", "surface-alt", 4.5],
   ["danger", "surface", 4.5],
+  ["border-control", "surface", 3],
+  ["border-control", "bg", 3],
   ["focus", "surface", 3],
   ["focus", "bg", 3],
 ];

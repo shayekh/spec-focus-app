@@ -21,7 +21,7 @@ export function TaskItem({ task, today, onEdit, onComplete, onDelete }: TaskItem
         <div className="task-meta">
           <span className={`badge priority priority-${task.priority}`}>Priority: {task.priority}</span>
           <span className="badge">Status: {task.status}</span>
-          {task.dueDate && <span className="badge">Due {task.dueDate}</span>}
+          {task.dueDate && <span className="badge due">Due {task.dueDate}</span>}
           {overdue && <span className="badge overdue">Overdue</span>}
           {task.tags.map((tag) => (
             <span key={tag} className="badge">

@@ -122,3 +122,11 @@ No constitution violations; nothing to justify.
   in the empty state; and an outlined Delete button in the list (the confirm dialog keeps the
   solid one). All colors are theme tokens covered by the contrast test, and the behavior is covered
   by `tests/e2e/interaction.spec.ts` and the component tests. No requirement changes.
+
+- **Typography and color pass** (second UI/UX review, saved in `design-system/focus-app/MASTER.md`):
+  form control borders now use a stronger `--border-control` token (at least 3:1 against their
+  background in both themes, per WCAG 1.4.11); font sizes and weights come from named tokens in
+  `src/styles/typography.css`; task descriptions are limited to 70 characters per line; due dates
+  use tabular figures; headings wrap balanced. System fonts are kept so the app makes no
+  third-party requests (FR-013). Covered by `tests/unit/contrast.test.ts`,
+  `tests/unit/typography.test.ts`, and `tests/e2e/typography-color.spec.ts`. No requirement changes.

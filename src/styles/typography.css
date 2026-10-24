@@ -1,0 +1,11 @@
+/* Type scale and weights. All sizes are in rem so text follows the user's browser settings. */
+:root {
+  --text-sm: 0.875rem; /* 14px: labels, badges, helper and error text */
+  --text-base: 1rem; /* 16px: body text and controls */
+  --text-md: 1.125rem; /* 18px: task titles */
+  --text-xl: 1.625rem; /* 26px: page heading */
+
+  --weight-regular: 400;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+}
