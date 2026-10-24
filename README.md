@@ -3,6 +3,8 @@
 A personal task manager that runs entirely in your browser. There is no backend and no account:
 your tasks are stored on your own device.
 
+**Live demo: https://shayekh.github.io/spec-focus-app/**
+
 ![The task list, with priorities, due dates, overdue and repeat badges, tags, and subtask progress](docs/screenshots/list.png)
 
 ## What it does
