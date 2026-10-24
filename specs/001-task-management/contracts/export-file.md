@@ -25,6 +25,10 @@ Used by FR-018 and FR-019. The file is JSON, named `focus-app-tasks-YYYY-MM-DD.j
 }
 ```
 
+> **Added by [004-recurring-tasks](../../004-recurring-tasks/contracts/data-contract.md):** each task may also carry the optional fields `recurrence`, `seriesId` and `seriesTemplate`. Files without them stay valid, and unreadable repeat settings are dropped on import so the task is kept as an ordinary task.
+
+> **Added by [005-subtasks](../../005-subtasks/contracts/data-contract.md):** each task may also carry an optional ordered `subtasks` array. Files without it stay valid, and an unreadable `subtasks` value is dropped on import so the task is kept without subtasks.
+
 ## Import rules
 
 1. File MUST be valid JSON with `app === "focus-app"` and a supported `version`.

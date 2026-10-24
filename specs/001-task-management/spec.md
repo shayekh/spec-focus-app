@@ -6,6 +6,8 @@
 
 **Status**: Draft
 
+**Extended by**: [005-subtasks](../005-subtasks/spec.md) (steps inside a task), [004-recurring-tasks](../004-recurring-tasks/spec.md) (tasks that repeat), [003-calendar-view](../003-calendar-view/spec.md) (a second way to see tasks, by due date) and [002-task-form-modal](../002-task-form-modal/spec.md), which fully specifies how the task form behaves as a modal (the close button, unsaved-changes confirmation, and isolation of the page underneath). Where the two differ about the form, 002 applies.
+
 **Input**: User description: "Build a personal task management application called Focus App. Users can create, edit, complete, and delete tasks. Each task has title, description, priority (low, medium, high), status (todo, in-progress, completed), optional due date, and tags. The main interface shows a list of tasks. Users can filter by status, priority, and tag, and search by title and description. Tasks persist locally so data survives restarts. Clean desktop-first interface with dark and light themes."
 
 ## Clarifications

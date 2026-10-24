@@ -227,3 +227,13 @@ Add US2, then US3, then US4, validating each at its checkpoint. Add Phase 7 (bac
 - [X] T058 [P] Add a `--placeholder` color token for both themes in `src/styles/tokens.css`, apply it to `::placeholder` in `src/styles/app.css`, and add `placeholder` on `bg`/`surface` pairs (4.5:1) to `TEXT_PAIRS` in `tests/unit/contrast.test.ts` per SC-005 (partial)
 - [X] T059 [P] Resolve the save-failure notice that no requirement covers (`saveTasks` result handling in `src/storage/taskStore.ts` and `src/state/useTasks.ts`): add a matching functional requirement to `specs/001-task-management/spec.md` via `/speckit-specify` or `/speckit-clarify`, or document in `plan.md` why it is kept per (unrequested)
 - [X] T060 [P] Add a component test in `tests/component/TaskList.test.tsx` or a Playwright test in `tests/e2e/performance.spec.ts` that renders 500 tasks and asserts a filter or search change updates the visible list in under 1 second per SC-003 (partial)
+
+---
+
+## Phase 10: Convergence
+
+**Purpose**: Remaining gaps found by a second `/speckit-converge` pass.
+
+- [ ] T061 Apply the saved or system theme before first paint: add a small inline script in `index.html` `<head>` (before the module script) that reads `localStorage["focus-app:theme"]` inside try/catch, falls back to `prefers-color-scheme`, and sets `document.documentElement.dataset.theme`; keep it consistent with `initialTheme()` in `src/storage/preferences.ts`; add a Playwright test in `tests/e2e/theme.spec.ts` that delays `/src/main.tsx` and asserts `data-theme` is already `dark` under a dark system preference before the app script runs, per research: Theming decision, "no flash if applied before first paint" (partial)
+- [ ] T062 [P] Correct the stale tool versions: in `specs/001-task-management/plan.md` Technical Context change "TypeScript 5.x" and "Node 20 LTS" to the versions actually used (TypeScript 7.x, Vite 8, Vitest 5, Node 22.12 or newer per `package.json` `engines`), and in `specs/001-task-management/quickstart.md` change the prerequisite "Node.js 20 LTS" to "Node.js 22.12 or newer", per plan: Technical Context (contradicts)
+- [ ] T063 [P] Add the files that exist but are missing from the plan's Project Structure tree in `specs/001-task-management/plan.md` (`src/styles/typography.css`, `src/ui/useRestoreFocus.ts`, `.github/workflows/ci.yml`, `design-system/focus-app/MASTER.md`) with a one-line purpose each, and add `typography.css` to the `styles/` entry in the README project structure, per plan: Project Structure (unrequested)
